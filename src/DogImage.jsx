@@ -1,7 +1,17 @@
 // @ts-check
+import React from "react";
 
-export const DogImage = () => {
-  return <></>
+/**
+ * @type { (props: {imageUrl: string}) => JSX.Element }
+ */
+
+export const DogImage = ({imageUrl}) => {
+  return (
+    <img
+      src={imageUrl}
+      alt="かわいい犬の画像"
+    />
+  )
 }
 
 export default DogImage
