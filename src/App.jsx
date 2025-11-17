@@ -12,9 +12,20 @@ export const App = () => {
     "https://images.dog.ceo/breeds/papillon/n02086910_8590.jpg"
   );
 
-  const handleUpdate = () => {
-    console.log("画像を更新します"); 
-    setDogUrl("https://images.dog.ceo/breeds/hound-english/n02089973_1132.jpg");
+    const handleFetchRandomDog = async () => {
+    const url = "https://dog.ceo/api/breeds/image/random";
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`レスポンスステータス: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      setDogUrl(result.message);
+      } catch (error) {
+        console.error("データの取得に失敗しました:", error);
+      }
   };
 
   return (
@@ -30,7 +41,7 @@ export const App = () => {
     />
     <p>犬の画像を表示するサイトです。かわいい犬をどうぞ！</p>
 
-    <button onClick={handleUpdate}>更新</button>
+    <button onClick={handleFetchRandomDog}>更新 </button>
     </main>
     </div>
   )
