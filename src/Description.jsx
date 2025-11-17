@@ -16,7 +16,7 @@ export const Description = () => {
         if (!response.ok) {
           throw new Error(`レスポンスステータス: ${response.status}`);
         }
-  
+        
         const result = await response.json();
   
         setDogUrl(result.message);
