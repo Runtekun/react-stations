@@ -1,8 +1,10 @@
 // @ts-check
 import React, { useState, useEffect } from "react";
+import BreedsSelect from "./BreedsSelect";
 
 export const DogListContainer = () => {
   const [breeds, setBreeds] = useState([]);
+  const [selectedBreed, setSelectedBreed] = useState("");
 
   useEffect(() => {
     const fetchBreeds = async () => {
@@ -26,6 +28,13 @@ export const DogListContainer = () => {
 
   return (
     <div>
+
+      <BreedsSelect
+        breeds={breeds}
+        selectedBreed={selectedBreed}
+        setSelectedBreed={setSelectedBreed}
+      />
+
       <h2>犬種一覧</h2>
       <ul>
         {breeds.map((breed) => (
