@@ -5,6 +5,7 @@ import BreedsSelect from "./BreedsSelect";
 export const DogListContainer = () => {
   const [breeds, setBreeds] = useState([]);
   const [selectedBreed, setSelectedBreed] = useState("");
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     const fetchBreeds = async () => {
@@ -15,6 +16,9 @@ export const DogListContainer = () => {
 
         const breedList = Object.keys(result.message);
         setBreeds(breedList);
+
+        if (breedList.length > 0) setSelectedBreed(breedList[0]);
+
       } catch (err) {
         console.error("犬種一覧の取得に失敗しました:", err);
       }
@@ -23,7 +27,25 @@ export const DogListContainer = () => {
     fetchBreeds();
   }, []);
 
+    const handleShowImages = async () => {
+    
+    const breed = selectedBreed || breeds[0];
+    if (!breed) return;
 
+    const count = 12;
+    const url = `https://dog.ceo/api/breed/${breed}/images/random/${count}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.status === "success") {
+        setImages(data.message);
+      }
+    } catch (err) {
+      console.error("画像の取得に失敗しました:", err);
+    }
+  };
 
 
   return (
@@ -33,7 +55,21 @@ export const DogListContainer = () => {
         breeds={breeds}
         selectedBreed={selectedBreed}
         setSelectedBreed={setSelectedBreed}
-      />
+      />  
+      
+      <button onClick={handleShowImages}>表示</button>
+
+      <h2>画像一覧</h2>
+      <ul>
+        {images.map((url) => (
+          <li key={url}>
+            <img
+              src={url}
+              alt={selectedBreed}
+            />
+          </li>
+        ))}
+      </ul>
 
       <h2>犬種一覧</h2>
       <ul>
@@ -42,6 +78,7 @@ export const DogListContainer = () => {
         ))}
       </ul>
     </div>
+
   )
 }
 

@@ -12,7 +12,7 @@ export const BreedsSelect = ({ breeds, selectedBreed, setSelectedBreed }) => {
       {breeds.map((breed) => (
         <option key={breed} value={breed}>
           {breed}
-        </option>
+        </option> 
       ))}
     </select>
   );
